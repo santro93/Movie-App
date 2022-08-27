@@ -41,37 +41,34 @@ class _HomeScreenState extends State<HomeScreen> {
     // context.read<AuthBloc>().add(const AuthEventInitialize());
     // return BlocBuilder<AuthBloc, AuthState>(builder: context, state);
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Signin(),
-                      ));
-                  final SharedPreferences sharedPreferences =
-                      await SharedPreferences.getInstance();
-                  sharedPreferences.setBool(isLoggedKey, false);
-                },
-                icon: const Icon(Icons.logout))
-          ],
-          title: const Text("Movie"),
-          centerTitle: true,
-        ),
-        body: Visibility(
-          visible: isLoaded,
-          child: ListView.builder(
-            itemCount: movies!.length,
-            itemBuilder: ((context, index) {
-              return Container(
-                child: Text(movies![index].thumbnailUrl!),
-              );
-            }),
-          ),
-          replacement: const Center(
-            child: CircularProgressIndicator(),
-          ),
-        ));
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () async {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Signin(),
+                    ));
+                final SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
+                sharedPreferences.setBool(isLoggedKey, false);
+              },
+              icon: const Icon(Icons.logout))
+        ],
+        title: const Text("Movie"),
+        centerTitle: true,
+      ),
+      body: isLoaded
+          ? ListView.builder(
+              itemCount: movies!.length,
+              itemBuilder: ((context, index) {
+                return Container(
+                  child: Text(movies![index].thumbnailUrl!),
+                );
+              }),
+            )
+          : const Center(child: CircularProgressIndicator()),
+    );
   }
 }
