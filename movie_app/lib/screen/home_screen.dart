@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/screen/signin_screen.dart';
 import 'package:movie_app/services/cubit/movie_cubit.dart';
-import 'package:movie_app/services/rest_api/api_services.dart';
+import 'package:movie_app/services/cubit/movie_state.dart';
 import 'package:movie_app/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Movie>? movies;
   var isLoaded = false;
+  MoviesCubit moviesCubit = MoviesCubit();
 
   @override
   void initState() {
@@ -31,12 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getData() async {
-    movies = MovieCubit().displayData();
-    if (movies != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
+    log("message");
+    movies = await moviesCubit.displayData();
+    log(" Movies $movies");
+    // if (movies != null) {
+    //   setState(() {
+    //     isLoaded = true;
+    //     log("isLoaded $isLoaded");
+    //   });
   }
 
   @override
@@ -61,13 +67,29 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
       ),
       body: isLoaded
-          ? ListView.builder(
-              itemCount: movies!.length,
-              itemBuilder: ((context, index) {
-                return Container(
-                  child: Text(movies![index].thumbnailUrl!),
-                );
-              }),
+          ? BlocBuilder<MoviesCubit, MoviesState>(
+              builder: (context, state) {
+                if (state is LoadedState) {
+                  log("inside BlocBuilder $movies");
+                  return ListView.builder(
+                    itemCount: movies!.length,
+                    itemBuilder: ((context, index) {
+                      return Container(
+                        child: Text(movies![index].thumbnailUrl!),
+                      );
+                    }),
+                  );
+                } else {
+                  return Container();
+                  // ? ListView.builder(
+                  //     itemCount: movies!.length,
+                  //     itemBuilder: ((context, index) {
+                  //       return Container(
+                  //         child: Text(movies![index].thumbnailUrl!),
+                  //       );
+                }
+                //   )
+              },
             )
           : const Center(child: CircularProgressIndicator()),
     );

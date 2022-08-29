@@ -1,17 +1,35 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
 import 'package:movie_app/model/movie.dart';
+import 'package:movie_app/services/cubit/movie_state.dart';
 import 'package:movie_app/services/rest_api/api_services.dart';
 
-part 'movie_state.dart';
+// class MovieCubit extends Cubit<List<Movie>?> {
+//   MovieCubit() : super(null);
 
-class MovieCubit extends Cubit<List<Movie>?> {
-  MovieCubit() : super(null);
+//   displayData() async {
+//     List<Movie>? showData = await ApiServices().getMovie();
+//     emit(showData);
+//   }
+// }
+
+class MoviesCubit extends Cubit<MoviesState> {
+  MoviesCubit({this.repository}) : super(InitialState()) {
+    displayData();
+  }
+
+  ApiServices? repository;
 
   displayData() async {
-    var showData = await ApiServices().getMovie();
-    emit(showData);
+    try {
+      final movies = await ApiServices().getMovie();
+      log("inside MoviesCubit $movies");
+      emit(LoadedState(movies));
+    } catch (e) {
+      String result = e.toString();
+      log("${result}");
+    }
   }
 }

@@ -7,8 +7,8 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MaterialApp(
-      home: BlocProvider(
-        create: ((context) => MovieCubit()),
+      home: BlocProvider<MoviesCubit>(
+        create: ((context) => MoviesCubit()),
         child: const Signin(),
       ),
       debugShowCheckedModeBanner: false,
