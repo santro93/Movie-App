@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Movie>? movies;
+  List<Movie>? movies = [];
   var isLoaded = false;
   MoviesCubit moviesCubit = MoviesCubit();
 
@@ -28,21 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
     getData();
   }
 
-  @override
-  dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
   getData() async {
     log("message");
-    movies = await moviesCubit.displayData();
-    log(" Movies $movies");
-    // if (movies != null) {
-    //   setState(() {
-    //     isLoaded = true;
-    //     log("isLoaded $isLoaded");
-    //   });
+    movies = await MoviesCubit().displayData();
+    log(" getData Movies $movies");
+    if (movies != null) {
+      setState(() {
+        isLoaded = true;
+        log("isLoaded $isLoaded");
+      });
+    }
   }
 
   @override
@@ -69,7 +64,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: isLoaded
           ? BlocBuilder<MoviesCubit, MoviesState>(
               builder: (context, state) {
-                if (state is LoadedState) {
+                if (state is InitialState) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is LoadedState) {
                   log("inside BlocBuilder $movies");
                   return ListView.builder(
                     itemCount: movies!.length,

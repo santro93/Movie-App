@@ -16,9 +16,7 @@ import 'package:movie_app/services/rest_api/api_services.dart';
 // }
 
 class MoviesCubit extends Cubit<MoviesState> {
-  MoviesCubit({this.repository}) : super(InitialState()) {
-    displayData();
-  }
+  MoviesCubit({this.repository}) : super(InitialState()) ;
 
   ApiServices? repository;
 
