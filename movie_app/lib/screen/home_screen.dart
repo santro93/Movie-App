@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/screen/signin_screen.dart';
-import 'package:movie_app/services/auth_bloc/auth_bloc.dart';
-import 'package:movie_app/services/auth_bloc/auth_event.dart';
-import 'package:movie_app/services/auth_bloc/auth_state.dart';
+import 'package:movie_app/services/cubit/movie_cubit.dart';
 import 'package:movie_app/services/rest_api/api_services.dart';
 import 'package:movie_app/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,8 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
     getData();
   }
 
+  @override
+  dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   getData() async {
-    movies = await ApiServices().getMovie();
+    movies = MovieCubit().displayData();
     if (movies != null) {
       setState(() {
         isLoaded = true;
@@ -38,8 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // context.read<AuthBloc>().add(const AuthEventInitialize());
-    // return BlocBuilder<AuthBloc, AuthState>(builder: context, state);
     return Scaffold(
       appBar: AppBar(
         actions: [
