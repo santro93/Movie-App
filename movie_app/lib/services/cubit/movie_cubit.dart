@@ -13,17 +13,19 @@ import 'package:movie_app/services/rest_api/api_services.dart';
 //   }
 // }
 
-class MoviesCubit extends Cubit<MoviesState> {
-  MoviesCubit() : super(LoadedState(ApiServices.getMovie()));
+class MoviesCubit extends Cubit<MovieState> {
+  MoviesCubit() : super(MovieDisplay(ApiServices().getMovie()));
 
   displayData() async {
     bool? isLoaded;
     // try {
-    if (ApiServices.getMovie() != null) {
+    // ignore: unnecessary_null_comparison
+    if (ApiServices().getMovie() != null) {
       isLoaded = true;
-      final movies = await ApiServices.getMovie();
-      log("inside MoviesCubit $isLoaded");
-      emit(LoadedState(movies!));
+      Future<List<Movie>> movies =
+          (await ApiServices().getMovie()) as Future<List<Movie>>;
+      log("inside MoviesCubit $movies");
+      emit(MovieDisplay(movies));
     } else {
       isLoaded = false;
       log("Else MoviesCubit $isLoaded");

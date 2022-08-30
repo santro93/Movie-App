@@ -5,6 +5,7 @@ import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/screen/signin_screen.dart';
 import 'package:movie_app/services/cubit/movie_cubit.dart';
 import 'package:movie_app/services/cubit/movie_state.dart';
+import 'package:movie_app/services/rest_api/api_services.dart';
 import 'package:movie_app/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,9 +17,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Movie>? movies = [];
+  List<Movie> movies = [];
   var isLoaded = false;
-  MoviesCubit moviesCubit = MoviesCubit();
 
   @override
   void initState() {
@@ -27,16 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
     getData();
   }
 
-  getData() async {
-    log("message");
-    movies = await moviesCubit.displayData() as List<Movie>?;
+  Future<List<Movie>> getData() async {
+    log("message getData $movies");
+    movies = await MoviesCubit().displayData();
     log(" getData Movies $movies");
-    // if (movies != null) {
-    //   setState(() {
-    //     isLoaded = true;
-    //     log("isLoaded $isLoaded");
-    //   });
-    // }
+    //   // if (movies != null) {
+    //   //   setState(() {
+    //   //     isLoaded = true;
+    //   //     log("isLoaded $isLoaded");
+    //   //   });
+    //   // }
+    return movies;
   }
 
   @override
@@ -54,29 +55,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   final SharedPreferences sharedPreferences =
                       await SharedPreferences.getInstance();
                   sharedPreferences.setBool(isLoggedKey, false);
-                  // context.read<MoviesCubit>().displayData();
                 },
                 icon: const Icon(Icons.logout))
           ],
           title: const Text("Movie"),
           centerTitle: true,
         ),
-        body:
-            //  isLoaded
-            //     ?
-            BlocBuilder<MoviesCubit, MoviesState>(
+        body: BlocBuilder<MoviesCubit, MovieState>(
           builder: (context, state) {
-            if (state is InitialState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is LoadedState) {
-              log("inside BlocBuilder $movies");
+            if (state is MovieDisplay) {
+              log("inside BlocBuilder $movies ");
               return ListView.builder(
-                itemCount: state.movies.length,
+                itemCount: movies.length,
                 itemBuilder: ((context, index) {
+                  log("index");
+                  Text(movies[index].thumbnailUrl!);
                   return Container(
-                    child: Text(state.movies[index].thumbnailUrl!),
+                    child: const Center(child: Text("hello")),
                   );
                 }),
               );
