@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:movie_app/model/movie.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServices {
-  Future<List<Movie>?> getMovie() async {
+  static getMovie() async {
     var client = http.Client();
 
     var uri = Uri.parse("https://jsonplaceholder.typicode.com/photos");

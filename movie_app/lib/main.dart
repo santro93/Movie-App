@@ -5,10 +5,10 @@ import 'package:movie_app/services/cubit/movie_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(
+  runApp( 
     MaterialApp(
       home: BlocProvider<MoviesCubit>(
-        create: ((context) => MoviesCubit()),
+        create: ((context) =>  MoviesCubit()),
         child: const Signin(),
       ),
       debugShowCheckedModeBanner: false,

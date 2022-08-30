@@ -20,8 +20,8 @@ class InitialState extends MoviesState {
 class LoadedState extends MoviesState {
   LoadedState(this.movies);
 
-  final List<Movie>? movies;
+  final List<Movie> movies;
 
   @override
-  List<Object> get props => [movies!];
+  List<Object> get props => [movies] as dynamic;
 }
