@@ -4,6 +4,7 @@ import 'package:movie_app/model/movie.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServices {
+  final List<Movie> sample = [];
   Future<List<Movie>> getMovie() async {
     var client = http.Client();
 
@@ -11,11 +12,16 @@ class ApiServices {
     var response = await client.get(uri);
 
     if (response.statusCode == 200) {
-      var json = response.body;
-      log("in side ApiServices  $json");
-      List<Movie> sample = Movie.fromJson(jsonDecode(json)) as List<Movie>;
-      return sample;
+      try {
+        var json = response.body;
+        //   log("in side ApiServices  $json");
+        final sample = movieFromJson(json);
+        log("in side ApiServices  $sample");
+        return sample;
+      } catch (e) {
+        print(e.toString());
+      }
     }
-    return [];
+    return sample;
   }
 }

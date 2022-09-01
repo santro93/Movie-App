@@ -9,6 +9,77 @@ import 'package:movie_app/services/rest_api/api_services.dart';
 import 'package:movie_app/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// class HomeScreen extends StatefulWidget {
+//   const HomeScreen({Key? key}) : super(key: key);
+
+//   @override
+//   State<HomeScreen> createState() => _HomeScreenState();
+// }
+
+// class _HomeScreenState extends State<HomeScreen> {
+//   var movieList = [];
+
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//     getData();
+//   }
+
+//   getData() async {
+//     movieList = await (MoviesCubit().displayData());
+//     log("message  $movieList");
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(
+//           actions: [
+//             IconButton(
+//                 onPressed: () async {
+//                   Navigator.pushReplacement(
+//                       context,
+//                       MaterialPageRoute(
+//                         builder: (context) => const Signin(),
+//                       ));
+//                   final SharedPreferences sharedPreferences =
+//                       await SharedPreferences.getInstance();
+//                   sharedPreferences.setBool(isLoggedKey, false);
+//                 },
+//                 icon: const Icon(Icons.logout))
+//           ],
+//           title: const Text("Movie"),
+//           centerTitle: true,
+//         ),
+//         body: BlocBuilder<MoviesCubit, MovieState>(
+//           builder: (context, state) {
+//             if (state is MoviesCubit) {
+//               log("inside BlocBuilder State:  $state ");
+//               log("inside BlocBuilder $movieList ");
+//               return ListView.builder(
+//                 itemCount: movieList.length,
+//                 itemBuilder: ((context, index) {
+//                   return Center(child: Text("${movieList.}"));
+//                 }),
+//               );
+//             } else {
+//               return Container();
+//               // ? ListView.builder(
+//               //     itemCount: movies!.length,
+//               //     itemBuilder: ((context, index) {
+//               //       return Container(
+//               //         child: Text(movies![index].thumbnailUrl!),
+//               //       );
+//             }
+//             //   )
+//           },
+//         )
+//         // : const Center(child: CircularProgressIndicator()),
+//         );
+//   }
+// }
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -18,27 +89,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Movie> movies = [];
-  var isLoaded = false;
+  MoviesCubit moviesCubit = MoviesCubit();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+    // getData();
+    context.read<MoviesCubit>().displayData();
   }
 
-  Future<List<Movie>> getData() async {
-    log("message getData $movies");
-    movies = await MoviesCubit().displayData();
-    log(" getData Movies $movies");
-    //   // if (movies != null) {
-    //   //   setState(() {
-    //   //     isLoaded = true;
-    //   //     log("isLoaded $isLoaded");
-    //   //   });
-    //   // }
-    return movies;
-  }
+  // Future<List<Movie>> getData() async {
+  //   // log(" getDatass Movies $movies");
+  //   try {
+  //     movies = await moviesCubit.displayData();
+  //     log(" getDatass Movies $movies");
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  //   return movies;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -61,17 +131,23 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("Movie"),
           centerTitle: true,
         ),
-        body: BlocBuilder<MoviesCubit, MovieState>(
+        body: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, state) {
-            if (state is MovieDisplay) {
-              log("inside BlocBuilder $movies ");
+            if (state is InitialState) {
+              log("inside InitialState $InitialState ");
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is LoadedState) {
+              log("inside LoadedState $LoadedState ");
               return ListView.builder(
-                itemCount: movies.length,
+                itemCount: state.movies.length,
                 itemBuilder: ((context, index) {
                   log("index");
-                  Text(movies[index].thumbnailUrl!);
+
                   return Container(
-                    child: const Center(child: Text("hello")),
+                    child:
+                        Center(child: Text(state.movies[index].thumbnailUrl!)),
                   );
                 }),
               );

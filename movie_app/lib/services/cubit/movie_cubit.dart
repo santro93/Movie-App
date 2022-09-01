@@ -1,38 +1,28 @@
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
-import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/services/cubit/movie_state.dart';
 import 'package:movie_app/services/rest_api/api_services.dart';
 
-// class MovieCubit extends Cubit<List<Movie>?> {
-//   MovieCubit() : super(null);
+import '../../model/movie.dart';
 
-//   displayData() async {
-//     List<Movie>? showData = await ApiServices().getMovie();
-//     emit(showData);
-//   }
-// }
+class MoviesCubit extends Cubit<MoviesState> {
+  MoviesCubit() : super(InitialState()) {
+    displayData();
+  }
 
-class MoviesCubit extends Cubit<MovieState> {
-  MoviesCubit() : super(MovieDisplay(ApiServices().getMovie()));
+  ApiServices repository = ApiServices();
 
   displayData() async {
     bool? isLoaded;
-    // try {
-    // ignore: unnecessary_null_comparison
+    emit(InitialState());
     if (ApiServices().getMovie() != null) {
       isLoaded = true;
-      Future<List<Movie>> movies =
-          (await ApiServices().getMovie()) as Future<List<Movie>>;
-      log("inside MoviesCubit $movies");
-      emit(MovieDisplay(movies));
+      final movieList = await repository.getMovie();
+      log("inside MoviesCubit $movieList");
+      emit(LoadedState(movieList));
     } else {
       isLoaded = false;
       log("Else MoviesCubit $isLoaded");
     }
-    // } catch (e) {
-    //   String result = e.toString();
-    //   log("${result}");
-    // }
   }
 }

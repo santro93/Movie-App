@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/services/auth/auth_services.dart';
 import 'package:movie_app/services/auth_bloc/auth_event.dart';
