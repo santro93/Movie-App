@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final password = event.password;
       try {
         bool user =
-            Authentication.signIn(email: email, password: password) as bool;
+            Authentication.signIn(email: email, password: password) ;
         emit(AuthStateLoggedIn(user));
       } on Exception catch (e) {
         emit(AuthStateLogFailure(e));

@@ -20,10 +20,10 @@ class Authentication {
     }
   }
 
-  static Future<bool> signIn({
+  static bool signIn({
     required String email,
     required String password,
-  }) async {
+  }) {
     String result;
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
