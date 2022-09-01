@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/screen/signin_screen.dart';
 import 'package:movie_app/services/cubit/movie_cubit.dart';
 import 'package:movie_app/services/cubit/movie_state.dart';
