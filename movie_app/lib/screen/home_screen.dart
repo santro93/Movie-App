@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -17,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<MoviesCubit>().displayData();
   }
@@ -57,13 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: ((context, index) {
                 log("index");
 
-                return Card(child: Text(state.movies[index].thumbnailUrl!));
+                return Card(
+                  child: Text(state.movies[index].thumbnailUrl!),
+                );
               }),
             );
           } else {
             return Container();
           }
-          //   )
         },
       ),
     );

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/screen/home_screen.dart';
@@ -34,10 +35,13 @@ class _SigninState extends State<Signin> {
         final SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         sharedPreferences.setBool(isLoggedKey, true);
-      } catch (Exception) {
-        String result = Exception.toString();
+      } catch (err) {
+        String result = err.toString();
+        log(result);
       }
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

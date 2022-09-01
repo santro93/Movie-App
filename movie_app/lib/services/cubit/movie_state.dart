@@ -5,7 +5,7 @@ abstract class MoviesState extends Equatable {}
 
 class InitialState extends MoviesState {
   @override
-  List<Object> get props => [];
+  List<Movie> get props => [];
 }
 
 class LoadedState extends MoviesState {
