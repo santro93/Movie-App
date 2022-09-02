@@ -16,7 +16,7 @@ class MoviesCubit extends Cubit<MoviesState> {
     ApiServices repository = ApiServices();
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    bool? isLoggedIn = sharedPreferences.getBool(isLoggedKey);
+    bool? isLoggedIn = sharedPreferences.getBool(isLoggedinKey);
 
     if (isLoggedIn = true) {
       log("$isLoggedIn");

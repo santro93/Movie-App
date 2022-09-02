@@ -11,7 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventInitialize>((event, emit) async {
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      bool? isLoggedIn = sharedPreferences.getBool(isLoggedKey);
+      bool? isLoggedIn = sharedPreferences.getBool(isLoggedinKey);
       if (isLoggedIn = true) {
         emit(AuthStateLoggedIn(isLoggedIn));
       } else {

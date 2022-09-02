@@ -34,7 +34,7 @@ class _SigninState extends State<Signin> {
 
         final SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setBool(isLoggedKey, true);
+        sharedPreferences.setBool(isLoggedinKey, true);
       } catch (err) {
         String result = err.toString();
         log(result);

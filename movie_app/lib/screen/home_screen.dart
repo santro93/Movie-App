@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ));
                 final SharedPreferences sharedPreferences =
                     await SharedPreferences.getInstance();
-                sharedPreferences.setBool(isLoggedKey, false);
+                sharedPreferences.setBool(isLoggedinKey, false);
               },
               icon: const Icon(Icons.logout))
         ],

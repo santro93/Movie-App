@@ -30,7 +30,7 @@ class Authentication {
       if (email.isNotEmpty && password.isNotEmpty) {
         result = "User Logged In Successfullly";
 
-        log("Sign in $isLoggedKey");
+        log("Sign in $isLoggedinKey");
       }
       return true;
     } catch (err) {

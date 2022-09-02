@@ -1,1 +1,1 @@
-const String isLoggedKey = "isLoggedKey";
+const String isLoggedinKey = "isLoggedKey";
