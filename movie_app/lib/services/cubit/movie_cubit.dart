@@ -14,7 +14,7 @@ class MoviesCubit extends Cubit<MoviesState> {
     bool? isLoaded;
     emit(InitialState());
     // ignore: unnecessary_null_comparison
-    if (ApiServices().getMovie() != null) {
+    if (isLoaded != false) {
       isLoaded = true;
       final movieList = await repository.getMovie();
       log("inside MoviesCubit $movieList");
