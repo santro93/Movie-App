@@ -13,11 +13,11 @@ void main() {
         providers: [
           BlocProvider<AuthBloc>(
             create: (context) => AuthBloc(Authentication()),
-            child: const HomeScreen(),
+            // child: const HomeScreen(),
           ),
           BlocProvider<MoviesCubit>(
             create: (context) => MoviesCubit(),
-            child: const HomeScreen(),
+            // child: const HomeScreen(),
           ),
         ],
         child: const Signin(),
