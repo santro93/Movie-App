@@ -3,8 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:movie_app/services/cubit/movie_state.dart';
 import 'package:movie_app/services/rest_api/api_services.dart';
 
-import '../../model/movie.dart';
-
 class MoviesCubit extends Cubit<MoviesState> {
   MoviesCubit() : super(InitialState()) {
     displayData();
@@ -15,6 +13,7 @@ class MoviesCubit extends Cubit<MoviesState> {
   displayData() async {
     bool? isLoaded;
     emit(InitialState());
+    // ignore: unnecessary_null_comparison
     if (ApiServices().getMovie() != null) {
       isLoaded = true;
       final movieList = await repository.getMovie();

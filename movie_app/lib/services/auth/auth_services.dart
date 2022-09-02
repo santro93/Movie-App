@@ -13,6 +13,7 @@ class Authentication {
       model.User user =
           model.User(name: name, emailId: email, password: password);
       result = "User Registartaion is Completed Successfullly";
+      log(result);
       return true;
     } catch (err) {
       result = err.toString();
