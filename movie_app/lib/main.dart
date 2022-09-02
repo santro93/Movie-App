@@ -8,16 +8,16 @@ import 'package:movie_app/services/cubit/movie_cubit.dart';
 void main() {
   runApp(
     MultiBlocProvider(
-       providers: [
-            BlocProvider<AuthBloc>(
-              create: (context) => AuthBloc(Authentication()),
-            ),
-            BlocProvider<MoviesCubit>(
-              create: (context) => MoviesCubit(),
-            ),
-          ],
-      child: MaterialApp(
-        home: const Signin(),
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(Authentication()),
+        ),
+        BlocProvider<MoviesCubit>(
+          create: (context) => MoviesCubit(),
+        ),
+      ],
+      child: const MaterialApp(
+        home: Signin(),
         debugShowCheckedModeBanner: false,
       ),
     ),
